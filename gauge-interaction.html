@@ -4,9 +4,11 @@
   <script type="text/javascript">
     google.charts.load('current', {'packages':['gauge']});
     google.charts.setOnLoadCallback(drawGauge);
+
     var gaugeOptions = {min: 0, max: 280, yellowFrom: 200, yellowTo: 250,
       redFrom: 250, redTo: 280, minorTicks: 5};
     var gauge;
+
     function drawGauge() {
       gaugeData = new google.visualization.DataTable();
       gaugeData.addColumn('number', 'Engine');
@@ -14,20 +16,17 @@
       gaugeData.addRows(2);
       gaugeData.setCell(0, 0, 120);
       gaugeData.setCell(0, 1, 80);
+
       gauge = new google.visualization.Gauge(document.getElementById('gauge_div'));
       gauge.draw(gaugeData, gaugeOptions);
     }
-    function changeVal(dir) {
+
+    function changeTemp(dir) {
       var x=document.getElementById("engine").value;
       var y=document.getElementById("torpedo").value;
-      setInterval(function(){
-      gaugeData.setValue(0, 0, parseInt(x) +Math.round(60 * Math.random()));
+      gaugeData.setValue(0, 0, x);
+      gaugeData.setValue(0, 1, y);
       gauge.draw(gaugeData, gaugeOptions);
-      },5000);
-      setInterval(function() {
-      gaugeData.setValue(0, 1, parseInt(y) +Math.round(60 * Math.random()));
-      gauge.draw(gaugeData, gaugeOptions);
-      },5000);
     }
   </script>
  </head>
@@ -35,7 +34,7 @@
   <div id="gauge_div" style="width:280px; height: 140px;"></div><br/> <br/> <br/>
  Enter a value for Engine here: <input type="text" name="engine" id="engine"  /> <br/> <br/> <br/>
  Enter a value for Torpedo here: <input type="text" name="torpedo" id="torpedo"  /><br/> <br/> <br/>
-  <input type="button" value="Change values" onclick="changeVal()" />
+  <input type="button" value="Change values" onclick="changeTemp()" />
   
  </body>
 </html>
